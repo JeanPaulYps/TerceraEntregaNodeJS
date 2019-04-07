@@ -1,0 +1,25 @@
+{{>header}}
+	<h1>Ver Cursos</h1>
+	<table class="table">
+		<tr>
+			<th>Nombre</th>
+			<th>Descripcion</th>
+			<th>Valor</th>
+			<th>Cerrar</th>
+		</tr>
+		{{#each cursos}}
+			{{#if estado}}
+				<tr>
+					<td> <a href="verCurso/{{ID}}">{{nombre}}</a></td>
+					<td> {{descripcion}}</td>
+					<td> {{valor}}</td>
+					<td> 
+						<form class=" form-inline" action = "/cerrarCurso/{{ID}}">
+                        	<button class="btn btn-sm btn-danger" type="submit">Cerrar</button>
+                    	</form>
+					</td>
+				</tr>
+			{{/if}}
+		{{/each}}
+	</table>
+{{>footer}}

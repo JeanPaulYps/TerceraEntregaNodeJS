@@ -1,4 +1,4 @@
-# TerceraEntregaNodeJS
+# Tercera Entrega NodeJS
 
 Realización de las historias de usuario de la tercera entrega de nodeJS
 
@@ -32,9 +32,9 @@ Yo como interesado necesito ver una lista de cursos disponibles para identificar
 
 Criterios de aceptación:
 
-- [ ] Se lista la información básica del curso en un formato que sea amigable con el interesado (nombre, descripción y valor)
-- [ ] Permite al interesado seleccionar un curso y ver la información más detallada (descripción, modalidad e intensidad horaria)
-- [ ] Solamente muestra los cursos que estén en estado disponible
+- [x] Se lista la información básica del curso en un formato que sea amigable con el interesado (nombre, descripción y valor)
+- [x] Permite al interesado seleccionar un curso y ver la información más detallada (descripción, modalidad e intensidad horaria)
+- [x] Solamente muestra los cursos que estén en estado disponible
 
 
 # Historia 4
