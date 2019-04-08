@@ -8,12 +8,12 @@ Como usuario necesito poder ingresar a la plataforma utilizando mis credenciales
 
 Criterios de aceptación: 
 
-- [ ] Se debe crear un formulario que permita el registro de usuarios.
-- [ ] Los datos del formulario incluyen documento de identidad, nombre, correo y teléfono.
-- [ ] Los usuarios se crean por defecto como tipo aspirante.
+- [x] Se debe crear un formulario que permita el registro de usuarios.
+- [x] Los datos del formulario incluyen documento de identidad, nombre, correo y teléfono.
+- [x] Los usuarios se crean por defecto como tipo aspirante.
 - [ ] Los usuarios con rol de aspirante solo pueden visualizar los cursos disponibles y optar por inscribirse en estos.
 - [ ] Los usuarios con rol de coordinador pueden visualizar los cursos disponibles y cerrados.
-- [ ] No pueden existir dos usuarios con el mismo documento de identidad.
+- [x] No pueden existir dos usuarios con el mismo documento de identidad.
 
 # Historia 2
 
