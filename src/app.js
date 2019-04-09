@@ -10,8 +10,10 @@ const hbs = require("hbs")
 const mongoose = require('mongoose')
 const Curso = require("./modelos/cursos")
 const Usuario = require("./modelos/usuarios")
+const Matricula = require("./modelos/matriculas")
 const bodyParser = require("body-parser")
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 const middleware = require("./middleware")
 app.use(bodyParser.urlencoded({extended: false}))
 
@@ -33,37 +35,75 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 	localStorage = new LocalStorage('./scratch');
 }
 
+//Middleware
+app.use(middleware.hayUsuario)
+
 //Rutas del programa
 
-app.get('/', (req,res) => {res.render("main") })
+app.get('/',(req,res,next)=>{console.log(localStorage.getItem('token')); next();}, (req,res) => {res.render("main") })
 
-app.get('/crear', (req,res) => {res.render("crear") })
+app.get('/crear', middleware.esCoordinador, (req,res) => {res.render("crear") })
 
 app.get('/verCursos',crud.verCursos)
 
-app.post('/creacionCurso', crud.crearCurso)
+app.post('/creacionCurso', middleware.esCoordinador, crud.crearCurso)
 
 app.get('/verCurso/:id', crud.verCurso)
 
-app.get('/registro', (req,res)=>
-{
-	res.render("registro")
-})
-app.post('/registro', (req,res)=>
+app.get('/registro', (req,res)=> {res.render("registro")})
+
+app.post('/registro', crud.crearUsuario)
+
+app.get('/ingresar', (req,res)=> {res.render("ingresar")})
+
+app.post('/ingresar', (req,res)=>
 {
 	datos = req.body
-	let aspirante = new Usuario({
-		nombre: datos.nombre,
-		correo: datos.correo,
-		CC: datos.CC,
-		password: datos.password
-	}) 
-	aspirante.save((err)=>
+	console.log(datos)
+	Usuario.findOne({CC: datos.CC}, (err,resultado)=>
 	{
-		if (err) return res.render("mensaje", {mensaje: "OTRO USUARIO YA HA SIDO CREADO CON ESE DOCUMENTO DE IDENTIDAD"})
-		return res.render("mensaje", {mensaje: "Usuario creado con exito"})
+		
+		if (err) return res.render("mensaje", {mensaje: "error"})
+		if (!resultado) return res.render("mensaje", { mensaje: "Usuario no encontrado"})
+		if (!bcrypt.compareSync(datos.contrasena, resultado.contrasena))
+			return res.render("mensaje", {mensaje: "Contraseña incorrecta"})
+		
+		let token = jwt.sign(
+			{usuario: resultado}, '@FzKFc!p@a4uH7$t', {expiresIn: '12h'}
+		)
+		localStorage.setItem('token', token)
+		res.redirect("/")
 	})
 })
+
+app.get('/salir', (req,res)=>
+{
+	localStorage.setItem('token','')
+	res.redirect("/")
+})
+
+app.get('/inscripcion/:id', middleware.esAspirante, (req,res)=>
+{
+	ID = req.params.id
+	let token = localStorage.getItem('token')
+	jwt.verify(token, '@FzKFc!p@a4uH7$t', (err, decoded) => 
+	{
+		usuarioCC = decoded.usuario.CC
+		console.log(ID)
+		console.log(usuarioCC)
+		matricula = new Matricula ({
+			cursoID: ID,
+			usuarioCC: usuarioCC
+		})
+		matricula.save((err)=>
+		{
+			if (err) return res.render("mensaje", {mensaje: "YA SE HA CREADO UNA MATRICULA SIMILAR"})
+			else return res.render("mensaje", {mensaje: "Se ha creado matricula con exito"})
+		})
+	})
+})
+
+
 
 //Verificacion de conexiones
 

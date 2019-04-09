@@ -1,4 +1,6 @@
 const Curso = require("./modelos/cursos")
+const Usuario = require("./modelos/usuarios")
+const bcrypt = require('bcrypt');
 
 const crud = 
 {
@@ -37,6 +39,21 @@ const crud =
             if (err) return res.render("mensaje", {mensaje: "error"})
             if (!resultado) return res.render("mensaje", {mensaje: "No existe curso"})
             return res.render('verCurso', {curso: resultado})
+        })
+    },
+    crearUsuario: function (req,res)
+    {
+        datos = req.body
+        let aspirante = new Usuario({
+            nombre: datos.nombre,
+            correo: datos.correo,
+            CC: datos.CC,
+            contrasena: bcrypt.hashSync(datos.contrasena,10)
+        }) 
+        aspirante.save((err)=>
+        {
+            if (err) return res.render("mensaje", {mensaje: "OTRO USUARIO YA HA SIDO CREADO CON ESE DOCUMENTO DE IDENTIDAD"})
+            return res.render("mensaje", {mensaje: "Usuario creado con exito"})
         })
     }
     

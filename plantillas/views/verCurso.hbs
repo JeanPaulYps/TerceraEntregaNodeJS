@@ -39,6 +39,17 @@
                 </td>
             </tr>
         </tbody>
-
     </table>
+    {{#if sesion}}
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <form action="/inscripcion/{{curso.ID}}" method="GET">
+                    <button class="btn btn-success">Matricularse</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+        
 {{>footer}}

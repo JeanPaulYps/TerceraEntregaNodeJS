@@ -1,0 +1,22 @@
+{{>header}}
+<form action="/ingresar" method="POST">
+    <div class="container-fluid py-3">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card card-body">
+                    <h3 class="text-center mb-4">Ingreso</h3>
+                    <fieldset>
+                        <div class="form-group">
+                            <input type="number" name="CC" class="form-control input-lg" placeholder="Documento de Identidad" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="contrasena" class="form-control input-lg" placeholder="Contraseña"required  >
+                        </div>
+                        <input class="btn btn-lg btn-primary btn-block" value="Enviar" type="submit">
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{{>footer}}

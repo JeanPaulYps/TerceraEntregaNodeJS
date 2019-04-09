@@ -11,7 +11,7 @@ Criterios de aceptación:
 - [x] Se debe crear un formulario que permita el registro de usuarios.
 - [x] Los datos del formulario incluyen documento de identidad, nombre, correo y teléfono.
 - [x] Los usuarios se crean por defecto como tipo aspirante.
-- [ ] Los usuarios con rol de aspirante solo pueden visualizar los cursos disponibles y optar por inscribirse en estos.
+- [x] Los usuarios con rol de aspirante solo pueden visualizar los cursos disponibles y optar por inscribirse en estos.
 - [ ] Los usuarios con rol de coordinador pueden visualizar los cursos disponibles y cerrados.
 - [x] No pueden existir dos usuarios con el mismo documento de identidad.
 
@@ -43,9 +43,9 @@ Yo como aspirante necesito realizar mi proceso de inscripción para reservar mi 
 
 Criterios de aceptación: 
 
-- [ ] El aspirante debe ingresar la siguiente información obligatoria: documento de identidad, nombre, correo y teléfono.
-- [ ] Un aspirante no se puede matricular dos veces en el mismo curso.
-- [ ] Debe generar un mensaje de registro exitoso al usuario o uno de error en caso contrario.
+- [x] El aspirante debe ingresar la siguiente información obligatoria: documento de identidad, nombre, correo y teléfono.
+- [x] Un aspirante no se puede matricular dos veces en el mismo curso.
+- [x] Debe generar un mensaje de registro exitoso al usuario o uno de error en caso contrario.
 
 # Historia 5
 

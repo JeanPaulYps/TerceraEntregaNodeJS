@@ -12,7 +12,7 @@ const usuariosSchema = new Schema
         },
         CC:
         {
-            type:String,
+            type: Number,
             required:true,
             unique: true
         },

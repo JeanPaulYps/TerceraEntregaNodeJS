@@ -29,13 +29,21 @@
                     <a class="nav-link" href="/verCursos">Ver cursos</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" action ="/registro" method="GET">
-                <button class="btn btn-success my-2 my-sm-0" type="submit">Registrarse</button>
+            {{#if sesion}}
+            <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/salir" method="GET">
+                <button class="btn  btn-danger my-2 my-sm-0" type="submit">Salir</button>
             </form>
+            {{else}}
+            <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/registro" method="GET">
+                <button class="btn  btn-success my-2 my-sm-0" type="submit">Registrarse</button>
+            </form>
+            <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/ingresar" method="GET">
+                <button class="btn  btn-success my-2 my-sm-0" type="submit">Ingresar</button>
+            </form>
+            {{/if}}
         </div>
     </nav>
 </header>
 
 <body style="padding-top: 60px; margin-bottom: 60px">
 <main role="main" class="container mt-5" >
-
