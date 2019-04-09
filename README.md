@@ -21,10 +21,10 @@ Como coordinador necesito crear cursos de educación continua para ser divulgado
 
 Criterios de aceptación:
 
-- [ ] Se deben ingresar los siguientes datos requeridos por cada curso: Nombre completo, un id del curso, descripción y valor.
-- [ ] Debe permitir el ingreso de los siguientes datos opcionales: modalidad (virtual o presencial) e intensidad horaria.
-- [ ] No permite que existan dos cursos con el mismo id.
-- [ ] Los cursos deben tener una variable estado, por defecto al crearse van a estar en disponibles.
+- [x] Se deben ingresar los siguientes datos requeridos por cada curso: Nombre completo, un id del curso, descripción y valor.
+- [x] Debe permitir el ingreso de los siguientes datos opcionales: modalidad (virtual o presencial) e intensidad horaria.
+- [x] No permite que existan dos cursos con el mismo id.
+- [x] Los cursos deben tener una variable estado, por defecto al crearse van a estar en disponibles.
 
 # Historia 3
 

@@ -24,22 +24,33 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="/">Educación Continua</a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
+            {{#if coordinador}}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/verCursos">Ver cursos</a>
+                    <a class="nav-link" href="/crear">Crear Curso</a>
                 </li>
             </ul>
-            {{#if sesion}}
             <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/salir" method="GET">
                 <button class="btn  btn-danger my-2 my-sm-0" type="submit">Salir</button>
             </form>
             {{else}}
-            <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/registro" method="GET">
-                <button class="btn  btn-success my-2 my-sm-0" type="submit">Registrarse</button>
-            </form>
-            <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/ingresar" method="GET">
-                <button class="btn  btn-success my-2 my-sm-0" type="submit">Ingresar</button>
-            </form>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/verCursos">Ver cursos</a>
+                    </li>
+                </ul>
+                {{#if aspirante}}
+                <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/salir" method="GET">
+                    <button class="btn  btn-danger my-2 my-sm-0" type="submit">Salir</button>
+                </form>
+                {{else}}
+                    <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/registro" method="GET">
+                        <button class="btn  btn-success my-2 my-sm-0" type="submit">Registrarse</button>
+                    </form>
+                    <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/ingresar" method="GET">
+                        <button class="btn  btn-success my-2 my-sm-0" type="submit">Ingresar</button>
+                    </form>
+                {{/if}} 
             {{/if}}
         </div>
     </nav>

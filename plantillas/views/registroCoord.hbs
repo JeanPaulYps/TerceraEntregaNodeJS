@@ -1,0 +1,28 @@
+{{>header}}
+<form action="/registroCoord" method="POST">
+    <div class="container-fluid py-3">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card card-body">
+                    <h3 class="text-center mb-4">Registro</h3>
+                    <fieldset>
+                        <div class="form-group">
+                            <input type="text" name="nombre" class="form-control input-lg" placeholder="Nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="correo" class="form-control input-lg" placeholder="Correo" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="CC" class="form-control input-lg" placeholder="Documento de Identidad" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="contrasena" class="form-control input-lg" placeholder="Contraseña"required>
+                        </div>
+                        <input class="btn btn-lg btn-primary btn-block" value="Enviar" type="submit">
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{{>footer}}

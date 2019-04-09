@@ -19,10 +19,13 @@ const middlewares =
                 return next();
             }
             console.log(decoded)
-            //req.usuario = decoded.usuario;
-            //console.log(req.usuario)
             res.locals.sesion = true
-            //res.locals.nombre = req.usuario.nombre
+            res.locals.aspirante = false
+            res.locals.coordinador = false
+            if (decoded.usuario.tipo == "Coordinador")
+                res.locals.coordinador = true
+            if (decoded.usuario.tipo == "Aspirante")
+                res.locals.aspirante = true
             next();
         }
         )

@@ -103,6 +103,26 @@ app.get('/inscripcion/:id', middleware.esAspirante, (req,res)=>
 	})
 })
 
+app.get('/registroCoord', (req,res)=>
+{
+	res.render("registroCoord")
+})
+app.post('/registroCoord',(req,res)=>
+{
+	datos = req.body
+	let aspirante = new Usuario({
+		nombre: datos.nombre,
+		correo: datos.correo,
+		CC: datos.CC,
+		contrasena: bcrypt.hashSync(datos.contrasena,10),
+		tipo: "Coordinador"
+	}) 
+	aspirante.save((err)=>
+	{
+		if (err) return res.render("mensaje", {mensaje: "OTRO USUARIO YA HA SIDO CREADO CON ESE DOCUMENTO DE IDENTIDAD"})
+		return res.render("mensaje", {mensaje: "Usuario creado con exito"})
+	})
+})
 
 
 //Verificacion de conexiones
