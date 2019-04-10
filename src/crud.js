@@ -48,6 +48,7 @@ const crud =
             nombre: datos.nombre,
             correo: datos.correo,
             CC: datos.CC,
+            telefono: datos.telefono,
             contrasena: bcrypt.hashSync(datos.contrasena,10)
         }) 
         aspirante.save((err)=>

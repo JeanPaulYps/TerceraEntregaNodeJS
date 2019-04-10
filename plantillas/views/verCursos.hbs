@@ -1,10 +1,13 @@
 {{>header}}
-	<h1>Ver Cursos</h1>
-	<table class="table">
+	<h1 class="text-center"> Ver Cursos</h1>
+	<table class="table text-center	">
 		<tr>
 			<th>Nombre</th>
 			<th>Descripcion</th>
 			<th>Valor</th>
+			{{#if coordinador}}
+			<th>Cerrar</th>
+			{{/if}}
 		</tr>
 		{{#each cursos}}
 			{{#if estado}}
@@ -12,6 +15,11 @@
 					<td> <a href="verCurso/{{ID}}">{{nombre}}</a></td>
 					<td> {{descripcion}}</td>
 					<td> {{valor}}</td>
+					{{#if ../coordinador}}
+					<td><form class="form-inline text-center" action = "/cerrarCurso/{{ID}}">
+						<button class="btn btn-danger mx-auto" type="submit">Cerrar</button>
+					</form></td>
+					{{/if}}
 				</tr>
 			{{/if}}
 		{{/each}}

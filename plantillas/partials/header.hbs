@@ -29,6 +29,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/crear">Crear Curso</a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/verInscritos">Ver Inscritos</a>
+                </li>
             </ul>
             <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/salir" method="GET">
                 <button class="btn  btn-danger my-2 my-sm-0" type="submit">Salir</button>
@@ -44,10 +47,10 @@
                     <button class="btn  btn-danger my-2 my-sm-0" type="submit">Salir</button>
                 </form>
                 {{else}}
-                    <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/registro" method="GET">
+                    <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/registro" >
                         <button class="btn  btn-success my-2 my-sm-0" type="submit">Registrarse</button>
                     </form>
-                    <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/ingresar" method="GET">
+                    <form class="form-inline my-2 my-lg-0 mr-sm-2" action ="/ingresar">
                         <button class="btn  btn-success my-2 my-sm-0" type="submit">Ingresar</button>
                     </form>
                 {{/if}} 

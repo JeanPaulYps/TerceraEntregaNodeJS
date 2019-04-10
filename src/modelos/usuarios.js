@@ -26,6 +26,11 @@ const usuariosSchema = new Schema
             type:String,
             require:true
         },
+        telefono:
+        {
+            type:Number,
+            required:true
+        },
         tipo:
         {
             type:String,

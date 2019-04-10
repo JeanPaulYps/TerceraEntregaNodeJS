@@ -12,7 +12,7 @@ Criterios de aceptación:
 - [x] Los datos del formulario incluyen documento de identidad, nombre, correo y teléfono.
 - [x] Los usuarios se crean por defecto como tipo aspirante.
 - [x] Los usuarios con rol de aspirante solo pueden visualizar los cursos disponibles y optar por inscribirse en estos.
-- [ ] Los usuarios con rol de coordinador pueden visualizar los cursos disponibles y cerrados.
+- [x] Los usuarios con rol de coordinador pueden visualizar los cursos disponibles y cerrados.
 - [x] No pueden existir dos usuarios con el mismo documento de identidad.
 
 # Historia 2
@@ -53,14 +53,14 @@ Yo como coordinador de educación continua necesito ver los inscritos por cada u
 
 Criterios de aceptación:
 
-- [ ] Debe mostrar el listado de cursos disponibles
-- [ ] Por cada uno de los cursos muestra las personas inscritas
-- [ ] Puede cambiar el estado de un curso de disponible a cerrado
+- [x] Debe mostrar el listado de cursos disponibles
+- [x] Por cada uno de los cursos muestra las personas inscritas
+- [x] Puede cambiar el estado de un curso de disponible a cerrado
 
 # Historia 6
 Yo como coordinador necesito poder eliminar a las personas que ya no están interesadas en el curso para poder liberar los cupos del curso facilitando la inscripción a nuevas personas.
 
 Criterios de aceptación:
 
-- [ ] Se debe eliminar el usuario de la lista a partir del ingreso por parte del coordinador de los datos del usuario y del curso.
-- [ ] Me debe imprimir el listado de aspirantes del curso después de eliminar al especificado.
+- [x] Se debe eliminar el usuario de la lista a partir del ingreso por parte del coordinador de los datos del usuario y del curso.
+- [x] Me debe imprimir el listado de aspirantes del curso después de eliminar al especificado.

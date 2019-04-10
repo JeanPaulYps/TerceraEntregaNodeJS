@@ -42,7 +42,8 @@ const cursoSchema = new Schema
             type: Boolean,
             require: true,
             default: true
-        }
+        }, 
+        matriculas: [{type: Schema.Types.ObjectId, ref: 'Usuario'}]
 
     }
 )

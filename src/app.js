@@ -10,7 +10,6 @@ const hbs = require("hbs")
 const mongoose = require('mongoose')
 const Curso = require("./modelos/cursos")
 const Usuario = require("./modelos/usuarios")
-const Matricula = require("./modelos/matriculas")
 const bodyParser = require("body-parser")
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
@@ -86,20 +85,25 @@ app.get('/inscripcion/:id', middleware.esAspirante, (req,res)=>
 {
 	ID = req.params.id
 	let token = localStorage.getItem('token')
-	jwt.verify(token, '@FzKFc!p@a4uH7$t', (err, decoded) => 
+	jwt.verify(token, '@FzKFc!p@a4uH7$t', (error, decoded) => 
 	{
 		usuarioCC = decoded.usuario.CC
-		console.log(ID)
-		console.log(usuarioCC)
-		matricula = new Matricula ({
-			cursoID: ID,
-			usuarioCC: usuarioCC
+		Curso.findOne({"ID": ID, "matriculas": decoded.usuario._id}, (err,resultado) => {
+			if (resultado)
+				return res.render("mensaje", {mensaje: "YA SE HA CREADO UNA MATRICULA SIMILAR"})
+			Curso.findOneAndUpdate({"ID": ID}, {"$push":{"matriculas": decoded.usuario}}, (e,r) =>{
+				return res.render("mensaje", {mensaje: "Se ha creado matricula con exito"})
+			} )
+			
 		})
-		matricula.save((err)=>
-		{
+		//Curso.findOneAndUpdate({"ID": ID}, {$addToSet:{"matriculas": decoded.usuario}})
+		//if (err) return res.render("mensaje", {mensaje: "YA SE HA CREADO UNA MATRICULA SIMILAR"})
+		//else return res.render("mensaje", {mensaje: "Se ha creado matricula con exito"})
+		/*matricula.save((err)=>
+		{	
 			if (err) return res.render("mensaje", {mensaje: "YA SE HA CREADO UNA MATRICULA SIMILAR"})
 			else return res.render("mensaje", {mensaje: "Se ha creado matricula con exito"})
-		})
+		})*/
 	})
 })
 
@@ -124,6 +128,39 @@ app.post('/registroCoord',(req,res)=>
 	})
 })
 
+
+app.get("/verInscritos",middleware.esCoordinador, (req,res)=>
+{
+	Curso.find({"estado": true}, (err, cursos)=>
+	{
+		Usuario.populate(cursos,{path: "matriculas"}, (err,respuesta)=>
+		{
+			res.locals.cursos = respuesta
+			return res.render("verInscritos")
+		})
+	})
+	
+})
+//, {"$pull":{"matriculas.CC": usuarioCC}}
+app.post("/eliminarMatricula",middleware.esCoordinador, (req,res)=>
+{
+	ID = req.body.cursoID
+	usuarioID= req.body.usuarioID
+	console.log(ID, usuarioID)
+	Curso.updateOne({"ID": ID}, {"$pull":{"matriculas": usuarioID}} , (e,r) =>{
+		console.log(r)
+		return res.redirect("/verInscritos")
+
+	})
+})
+app.get("/cerrarCurso/:id", (req,res)=>{
+	console.log(req.params)
+	ID = req.params.id
+	Curso.updateOne({"ID": ID}, {"estado": false}, (e,r)=>{
+		console.log(r)
+		res.redirect("/verCursos")
+	})
+})
 
 //Verificacion de conexiones
 

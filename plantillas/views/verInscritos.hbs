@@ -1,0 +1,37 @@
+{{>header}}
+    <h1>Ver inscritos</h1>
+    {{#each cursos as |curso|}}
+    <table class="table">
+          <thead>
+            <tr>
+                <th colspan="5" style="text-align:center;">
+                    {{curso.nombre}}
+                </th>
+            </tr>
+            <tr>
+                <th>Documento</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Telefono</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each curso.matriculas as |usuario|}}
+            <tr>
+                <td>{{usuario.CC}}</td>
+                <td>{{usuario.nombre}}</td>
+                <td>{{usuario.correo}}</td>
+                <td>{{usuario.telefono}}</td>
+                <td><form class="form-inline" action = "/eliminarMatricula" method="POST">
+                    <input type="hidden" name="usuarioID" value="{{usuario._id}}">
+                    <input type="hidden" name="cursoID" value="{{curso.ID}}">
+                    <button class="btn btn-sm btn-danger" type="submit">Eliminar</button>
+                </form></td>
+            </tr>
+            {{/each}}
+        </tbody>
+     </table>
+     <br>
+    {{/each}}
+{{>footer}}
