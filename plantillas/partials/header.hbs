@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Prueba</title>
+    <title>{{titulo}}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -26,6 +26,9 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             {{#if coordinador}}
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/verCursos">Ver cursos</a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/crear">Crear Curso</a>
                 </li>

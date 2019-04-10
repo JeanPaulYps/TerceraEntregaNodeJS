@@ -18,7 +18,6 @@ const middlewares =
             if (err) {
                 return next();
             }
-            console.log(decoded)
             res.locals.sesion = true
             res.locals.aspirante = false
             res.locals.coordinador = false
@@ -57,6 +56,10 @@ const middlewares =
         }
         )
           
+    }, siHayUsuarioDetener: function (req,res,next) {
+        if(res.locals.sesion)
+            return res.render("mensaje", {mensaje: "Hay un usuario loggeado", titulo: "ERROR"})
+        next()
     }
 
 }

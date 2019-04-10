@@ -39,33 +39,47 @@ app.use(middleware.hayUsuario)
 
 //Rutas del programa
 
-app.get('/',(req,res,next)=>{console.log(localStorage.getItem('token')); next();}, (req,res) => {res.render("main") })
+app.get('/',(req,res) => 
+{	
+	res.locals.titulo = "Bienvenido"
+	res.render("main") 
+})
 
-app.get('/crear', middleware.esCoordinador, (req,res) => {res.render("crear") })
 
-app.get('/verCursos',crud.verCursos)
+app.get('/crear', middleware.esCoordinador, (req,res) => {
+	res.locals.titulo = "Crear"
+	res.render("crear") 
+})
 
 app.post('/creacionCurso', middleware.esCoordinador, crud.crearCurso)
 
+
+app.get('/verCursos',crud.verCursos)
+
 app.get('/verCurso/:id', crud.verCurso)
 
-app.get('/registro', (req,res)=> {res.render("registro")})
 
-app.post('/registro', crud.crearUsuario)
+app.get('/registro',middleware.siHayUsuarioDetener, (req,res)=> {
+	res.render("registro", {titulo: "Registro"})
+})
 
-app.get('/ingresar', (req,res)=> {res.render("ingresar")})
+app.post('/registro',  crud.crearUsuario)
+
+
+app.get('/ingresar', middleware.siHayUsuarioDetener, (req,res)=> {
+	res.render("ingresar", {titulo: "Ingresar"})
+})
 
 app.post('/ingresar', (req,res)=>
 {
 	datos = req.body
-	console.log(datos)
 	Usuario.findOne({CC: datos.CC}, (err,resultado)=>
 	{
 		
 		if (err) return res.render("mensaje", {mensaje: "error"})
-		if (!resultado) return res.render("mensaje", { mensaje: "Usuario no encontrado"})
+		if (!resultado) return res.render("mensaje", { mensaje: "Error en credenciales", titulo: "Error"})
 		if (!bcrypt.compareSync(datos.contrasena, resultado.contrasena))
-			return res.render("mensaje", {mensaje: "Contraseña incorrecta"})
+			return res.render("mensaje", {mensaje: "Error en credenciales", titulo: "Error"})
 		
 		let token = jwt.sign(
 			{usuario: resultado}, '@FzKFc!p@a4uH7$t', {expiresIn: '12h'}
@@ -75,90 +89,37 @@ app.post('/ingresar', (req,res)=>
 	})
 })
 
+
 app.get('/salir', (req,res)=>
 {
 	localStorage.setItem('token','')
 	res.redirect("/")
 })
 
-app.get('/inscripcion/:id', middleware.esAspirante, (req,res)=>
-{
-	ID = req.params.id
-	let token = localStorage.getItem('token')
-	jwt.verify(token, '@FzKFc!p@a4uH7$t', (error, decoded) => 
-	{
-		usuarioCC = decoded.usuario.CC
-		Curso.findOne({"ID": ID, "matriculas": decoded.usuario._id}, (err,resultado) => {
-			if (resultado)
-				return res.render("mensaje", {mensaje: "YA SE HA CREADO UNA MATRICULA SIMILAR"})
-			Curso.findOneAndUpdate({"ID": ID}, {"$push":{"matriculas": decoded.usuario}}, (e,r) =>{
-				return res.render("mensaje", {mensaje: "Se ha creado matricula con exito"})
-			} )
-			
-		})
-		//Curso.findOneAndUpdate({"ID": ID}, {$addToSet:{"matriculas": decoded.usuario}})
-		//if (err) return res.render("mensaje", {mensaje: "YA SE HA CREADO UNA MATRICULA SIMILAR"})
-		//else return res.render("mensaje", {mensaje: "Se ha creado matricula con exito"})
-		/*matricula.save((err)=>
-		{	
-			if (err) return res.render("mensaje", {mensaje: "YA SE HA CREADO UNA MATRICULA SIMILAR"})
-			else return res.render("mensaje", {mensaje: "Se ha creado matricula con exito"})
-		})*/
-	})
-})
 
-app.get('/registroCoord', (req,res)=>
+app.get('/inscripcion/:id', middleware.esAspirante, crud.matricularUsuario)
+
+
+app.get('/registroCoord',middleware.siHayUsuarioDetener, (req,res)=>
 {
+	res.locals.titulo = "Registro Coordinador"
 	res.render("registroCoord")
 })
-app.post('/registroCoord',(req,res)=>
-{
-	datos = req.body
-	let aspirante = new Usuario({
-		nombre: datos.nombre,
-		correo: datos.correo,
-		CC: datos.CC,
-		contrasena: bcrypt.hashSync(datos.contrasena,10),
-		tipo: "Coordinador"
-	}) 
-	aspirante.save((err)=>
-	{
-		if (err) return res.render("mensaje", {mensaje: "OTRO USUARIO YA HA SIDO CREADO CON ESE DOCUMENTO DE IDENTIDAD"})
-		return res.render("mensaje", {mensaje: "Usuario creado con exito"})
-	})
-})
+
+app.post('/registroCoord',crud.registroCoordinador )
 
 
-app.get("/verInscritos",middleware.esCoordinador, (req,res)=>
-{
-	Curso.find({"estado": true}, (err, cursos)=>
-	{
-		Usuario.populate(cursos,{path: "matriculas"}, (err,respuesta)=>
-		{
-			res.locals.cursos = respuesta
-			return res.render("verInscritos")
-		})
-	})
-	
-})
-//, {"$pull":{"matriculas.CC": usuarioCC}}
-app.post("/eliminarMatricula",middleware.esCoordinador, (req,res)=>
-{
-	ID = req.body.cursoID
-	usuarioID= req.body.usuarioID
-	console.log(ID, usuarioID)
-	Curso.updateOne({"ID": ID}, {"$pull":{"matriculas": usuarioID}} , (e,r) =>{
-		console.log(r)
-		return res.redirect("/verInscritos")
+app.get("/verInscritos",middleware.esCoordinador, crud.verMatriculas)
 
-	})
-})
-app.get("/cerrarCurso/:id", (req,res)=>{
-	console.log(req.params)
-	ID = req.params.id
-	Curso.updateOne({"ID": ID}, {"estado": false}, (e,r)=>{
-		console.log(r)
-		res.redirect("/verCursos")
+
+app.post("/eliminarMatricula",middleware.esCoordinador,crud.eliminarMatriculas)
+
+
+app.get("/cerrarCurso/:id", crud.cerrarCurso)
+
+app.get('*',(req,res)=> {
+	res.render('mensaje', {
+		mensaje: "No existe direccion",titulo: "Error",		
 	})
 })
 
